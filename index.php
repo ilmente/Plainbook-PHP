@@ -1,0 +1,1 @@
+<?php require_once 'pb-core/pb-init.php'; ?>
