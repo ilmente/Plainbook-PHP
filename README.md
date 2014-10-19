@@ -1,4 +1,4 @@
 Plainbook
 =========
 
-Simple PHP, AngularJS, Markdown and Dropbox-based CMS
+Simple PHP and Markdown CMS
