@@ -64,7 +64,7 @@ class PlainbookContext extends PlainbookBase {
 		return $query;
 	}
 	
-	public function loadContents($loadContents = false){
+	public function loadContents($loadContents){
 		$this->__all = null;
 		return $this->__loadContents = $loadContents;
 	}
