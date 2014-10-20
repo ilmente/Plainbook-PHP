@@ -1,14 +1,9 @@
-<?php partial('header'); ?>
+<?php partial('partials/header', $pb); ?>
+		
+<div id="main">
+	<div class="content">
+		<?php echo $pb->current->content; ?>
+	</div>
+</div>
 
-<ul>
-<?php foreach($pb->query() as $page){ ?>
-	<li>
-		<?php echo '<a href="'.$page->uri.'">'.$page->path.'</a>'; ?>
-	</li>
-	
-	
-<?php } ?>
-</ul>
-
-
-<?php echo $pb->current->excerpt; ?>
+<?php partial('partials/footer'); ?>
