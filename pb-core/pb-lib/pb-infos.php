@@ -5,10 +5,12 @@ class PlainbookInfos extends PlainbookBase {
 	protected $path;
 	protected $level;
 	protected $meta;
+	protected $tags;
 	protected $raw;
 	protected $content;
 	protected $excerpt;
 	protected $isCurrent;
+	protected $isParent;
 	protected $isFront;
 	
 	public function __construct($file, $currentFile, $fileRawContent, $loadContent){
@@ -16,12 +18,16 @@ class PlainbookInfos extends PlainbookBase {
 		$templateKeyword = PB_CONTENT_META_TEMPLATE;
 		
 		$this->path = str_replace(PB_CONTENT_DIR, '/', $fileForUri);
-		$this->uri = ($path == '/') ? PB_BASE_URL : PB_BASE_URL.$this->path;
-		$this->level = preg_match_all('/\//m', $this->path) - 1;
+		$this->uri = ($this->path == '/') ? PB_BASE_URL : PB_BASE_URL.$this->path;
+		$this->level = preg_match_all('/\//', $this->path) - 1;
 		$this->meta = $this->getMeta($fileRawContent);
+		$this->tags = $this->getTags($fileRawContent);
 		$this->template = property_exists($this->meta, $templateKeyword) ? $this->meta->$templateKeyword : 'default';
 		$this->isCurrent = ($file == $currentFile);
-		$this->isFront = ($uri == PB_BASE_URL);
+		$this->isFront = ($this->uri == PB_BASE_URL);
+		
+		if ($this->isCurrent || $this->isFront) $this->isParent = false;
+		else $this->isParent = (preg_match_all('/^('.preg_quote($fileForUri, '/').')/', $currentFile) > 0);
 		
 		if ($loadContent){
 			$this->raw = $fileRawContent;
@@ -47,6 +53,19 @@ class PlainbookInfos extends PlainbookBase {
 		}
 
 		return (object) $meta;
+	}
+	
+	protected function getTags($rawContent){
+		$tags = array();
+		
+		if (preg_match_all('/\s+#(\w+|\w+#\w+|\w+#)\s/im', $rawContent, $tagsMatch) > 0){
+			foreach ($tagsMatch[0] as $tag){
+				$tag = preg_replace('/^#/', '', trim($tag));
+				if (!in_array($tag, $tags)) array_push($tags, $tag);
+			}
+		}
+		
+		return $tags;
 	}
 	
 	protected function getContent($rawContent){

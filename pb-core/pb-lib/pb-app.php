@@ -6,7 +6,7 @@ class PlainbookApp extends PlainbookBase {
 	public function run(){
 		$pb = new PlainbookContext(); 
 		
-		function loadTemplate($pb){
+		function __loadTemplate($pb){
 			function partial($partial, $context = null){
 				include PB_BASE_DIR.'pb-theme/'.$partial.'.php';
 			}
@@ -18,13 +18,13 @@ class PlainbookApp extends PlainbookBase {
 		$templateDir = PB_BASE_DIR.'pb-theme/'.$pb->template.'.php';
 		
 		if (file_exists($templateDir)){
-			call_user_func('loadTemplate', $pb);
+			call_user_func('__loadTemplate', $pb);
 			return true;
 		}
 		
 		$pb->template = 'default';
 		if (file_exists($defaultDir)){
-			call_user_func('loadTemplate', $pb);
+			call_user_func('__loadTemplate', $pb);
 			return true;
 		}
 		
