@@ -26,7 +26,7 @@
 			<nav>
 				<?php 
 				foreach($data->query(array('root' => '/', 'deep' => 1, 'orderBy' => 'order')) as $page){ 
-					echo '<a class="'.($page->isCurrent ? 'current' : '').'" href="'.$page->uri.'">'.$page->meta->title.'</a>';
+					echo '<a class="'.($page->isCurrent ? 'current' : '').'" href="'.$page->url.'">'.$page->meta->title.'</a>';
 				} 
 				?>
 			</nav>

@@ -7,7 +7,7 @@ class PlainbookTheme extends PlainbookBase {
 	protected $__site;
 	protected $__data;
 	
-	public function __construct($config, $site, $data){
+	public function __construct($config, &$site, &$data){
 		$this->name = $config['pb.theme.name'];
 		$this->url = $config['pb.theme.url'];
 		$this->dir = $config['pb.theme.dir'];

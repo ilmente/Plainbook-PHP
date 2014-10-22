@@ -16,7 +16,7 @@ class PlainbookData extends PlainbookBase {
 	
 	protected function getFileInfos($file){
 		$fileRawContent = $this->__fs->readFile($file);
-		return new PlainbookInfos($this->__config, $file, $this->__currentFile, $fileRawContent, true);
+		return new PlainbookInfos($this->__config, $file, $this->__currentFile, $fileRawContent);
 	}
 	
 	protected function getFilesInfos(){

@@ -11,7 +11,9 @@ $config['pb.theme.name'] = 'default';
 // pb: contents settings
 $config['pb.contents.excerpt_lenght'] = 30;
 $config['pb.contents.extension'] = '.md';
-$config['pb.contents.keywords.template'] = 'template';
+
+// pb: keywords
+$config['pb.keywords.template'] = 'template';
 
 // slim: mode
 $config['mode'] = 'development';
