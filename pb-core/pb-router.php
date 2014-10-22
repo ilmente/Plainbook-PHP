@@ -22,7 +22,8 @@ $pb->get('/(:path(/))', function($path = '') use ($pb, $config){
 	$fileNotFound = function($path) use ($pb, $config){
 		$pb->redirect($config['pb.site.url'].'/404/');
 	};
-	
+
+	$path = str_replace('#', '', $path);
 	$pb->loader->load($path, $fileNotFound);
 });
 

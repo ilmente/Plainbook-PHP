@@ -1,6 +1,8 @@
 <?php
 	
 class PlainbookFS extends PlainbookBase {
+	const VISIBLE_FILES = '/^[^.|^#|^_]\w+/i';
+	
 	protected $__config;
 	
 	public function __construct($config){
@@ -25,7 +27,7 @@ class PlainbookFS extends PlainbookBase {
 		
 	    if ($handle = opendir($root)){
 	        while (false !== ($file = readdir($handle))){
-	            if (preg_match('/^[^_|^.]\w+/i', $file) > 0){
+	            if (preg_match(self::VISIBLE_FILES, $file) > 0){
 					$file = $root.$file;
 	                if (is_dir($file)) $this->getFiles($file.'/', $files);
 	                else {

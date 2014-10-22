@@ -7,6 +7,7 @@ class PlainbookInfos extends PlainbookBase {
 	
 	const TAGS_REGEXP = '/\s+#(\w+|\w+#\w+|\w+#)\s/im';
 	
+	protected $exists;
 	protected $raw;
 	protected $file;
 	protected $url;
@@ -30,6 +31,7 @@ class PlainbookInfos extends PlainbookBase {
 		$ext = $this->__config['pb.contents.extension'];
 		$uri = preg_replace('/((\/index\\'.$ext.')$|(\\'.$ext.')$)/i', '', $file).'/';
 		
+		$this->exists = true;
 		$this->raw = $fileRawContent;
 		$this->file = $file;
 		$this->path = str_replace($this->__config['pb.contents.dir'], '/', $uri);

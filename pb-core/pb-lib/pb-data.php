@@ -28,7 +28,11 @@ class PlainbookData extends PlainbookBase {
 	
 	public function get($path){
 		$file = $this->__fs->getFile($path);
-		return $this->getFileInfos($file);
+		if (isset($file)) return $this->getFileInfos($file);
+		
+		return (object) array(
+			'exists' => false
+		);
 	}
 	
 	public function query($params = array()){
