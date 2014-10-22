@@ -26,11 +26,15 @@ $config = array_merge(array(
 ), $config);
 
 $pb = new \Slim\Slim($config);
+
+$pb->e500Unlooper = false;
 $pb->setName($config['pb.site.name']);
 
 $pb->container->singleton('loader', function() use ($config){
 	return new PlainbookLoader($config);
 });
+
+unset($config);
 
 include_once 'pb-vendor/Parsedown.php'; 
 include_once 'pb-vendor/ParsedownExtra.php'; 

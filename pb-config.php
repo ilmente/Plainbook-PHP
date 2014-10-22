@@ -15,7 +15,7 @@ $config['pb.contents.extension'] = '.md';
 // pb: keywords
 $config['pb.keywords.template'] = 'template';
 
-// slim: mode
+// slim config
 $config['mode'] = 'development';
 
 // timezone
