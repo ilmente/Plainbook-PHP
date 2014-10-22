@@ -1,16 +1,22 @@
 <?php
 
-define('PB_SITE_NAME', 'Plainbook');
+// pb: site name
+$config['pb.site.name'] = 'Plainbook';
+$config['pb.site.url'] = 'http://localhost/dev/Plainbook';
+$config['pb.site.dir'] = realpath(dirname(__FILE__)).'/';
 
-define('PB_BASE_URL', 'http://localhost/dev/Plainbook'); // must not ends with '/'
-define('PB_BASE_DIR', realpath(dirname(__FILE__)).'/');
+// pb: theme
+$config['pb.theme.name'] = 'default';
 
-define('PB_CONTENT_DIR', PB_BASE_DIR.'pb-content/');
-define('PB_CONTENT_EXCERPT_LENGTH', 30);
-define('PB_CONTENT_META_TEMPLATE', 'template');
-define('PB_CONTENT_EXT', '.md');
+// pb: contents settings
+$config['pb.contents.excerpt_lenght'] = 30;
+$config['pb.contents.extension'] = '.md';
+$config['pb.contents.keywords.template'] = 'template';
 
+// slim: mode
+$config['mode'] = 'development';
 
+// timezone
 date_default_timezone_set('Europe/Rome');
 	
 ?>

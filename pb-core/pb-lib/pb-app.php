@@ -8,14 +8,14 @@ class PlainbookApp extends PlainbookBase {
 		
 		function __loadTemplate($pb){
 			function partial($partial, $context = null){
-				include PB_BASE_DIR.'pb-theme/'.$partial.'.php';
+				include PB_THEME_DIR.$partial.'.php';
 			}
 			
-			include PB_BASE_DIR.'pb-theme/'.$pb->template.'.php';
+			include PB_THEME_DIR.$pb->template.'.php';
 		};
 		
-		$defaultDir = PB_BASE_DIR.'pb-theme/default.php';
-		$templateDir = PB_BASE_DIR.'pb-theme/'.$pb->template.'.php';
+		$defaultDir = PB_THEME_DIR.'default.php';
+		$templateDir = PB_THEME_DIR.$pb->template.'.php';
 		
 		if (file_exists($templateDir)){
 			call_user_func('__loadTemplate', $pb);

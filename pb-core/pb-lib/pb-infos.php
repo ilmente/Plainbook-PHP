@@ -1,6 +1,7 @@
 <?php
 	
 class PlainbookInfos extends PlainbookBase {
+	protected $file;
 	protected $uri;
 	protected $path;
 	protected $level;
@@ -13,18 +14,22 @@ class PlainbookInfos extends PlainbookBase {
 	protected $isParent;
 	protected $isFront;
 	
-	public function __construct($file, $currentFile, $fileRawContent, $loadContent){
-		$fileForUri = preg_replace('/((\/index\\'.PB_CONTENT_EXT.')$|(\\'.PB_CONTENT_EXT.')$)/i', '', $file).'/';
-		$templateKeyword = PB_CONTENT_META_TEMPLATE;
+	public function __construct($config, $file, $currentFile, $fileRawContent, $loadContent){
+		$this->__config = $config;
 		
-		$this->path = str_replace(PB_CONTENT_DIR, '/', $fileForUri);
-		$this->uri = ($this->path == '/') ? PB_BASE_URL : PB_BASE_URL.$this->path;
+		$ext = $this->__config['pb.contents.extension'];
+		$fileForUri = preg_replace('/((\/index\\'.$ext.')$|(\\'.$ext.')$)/i', '', $file).'/';
+		$templateKeyword = $this->__config['pb.contents.keywords.template'];
+		
+		$this->file = $file;
+		$this->path = str_replace($this->__config['pb.contents.dir'], '/', $fileForUri);
+		$this->uri = ($this->path == '/') ? $this->__config['pb.site.url'] : $this->__config['pb.site.url'].$this->path;
 		$this->level = preg_match_all('/\//', $this->path) - 1;
 		$this->meta = $this->getMeta($fileRawContent);
 		$this->tags = $this->getTags($fileRawContent);
-		$this->template = property_exists($this->meta, $templateKeyword) ? $this->meta->$templateKeyword : 'default';
+		$this->template = $this->getTemplate($this->meta);
 		$this->isCurrent = ($file == $currentFile);
-		$this->isFront = ($this->uri == PB_BASE_URL);
+		$this->isFront = ($this->uri == $this->__config['pb.site.url']);
 		
 		if ($this->isCurrent || $this->isFront) $this->isParent = false;
 		else $this->isParent = (preg_match_all('/^('.preg_quote($fileForUri, '/').')/', $currentFile) > 0);
@@ -32,7 +37,7 @@ class PlainbookInfos extends PlainbookBase {
 		if ($loadContent){
 			$this->raw = $fileRawContent;
 			$this->content = $this->getContent($fileRawContent);
-			$this->excerpt = $this->getExcerpt($this->content, PB_CONTENT_EXCERPT_LENGTH);
+			$this->excerpt = $this->getExcerpt($this->content, $this->__config['pb.contents.excerpt_length']);
 		} else {
 			$this->raw = '';
 			$this->content = '';
@@ -66,6 +71,19 @@ class PlainbookInfos extends PlainbookBase {
 		}
 		
 		return $tags;
+	}
+	
+	protected function getTemplate($meta){
+		$defaultTemplate = 'default';
+		$template = property_exists($meta, $templateKeyword) ? $meta->$templateKeyword : $defaultTemplate;
+		
+		$templateFile = $this->__config['pb.theme.dir'].$template.'.php';
+		if (file_exists($templateFile)) return $template;
+		
+		$templateFile = $this->__config['pb.theme.dir'].$defaultTemplate.'.php';
+		if (file_exists($templateFile)) return $defaultTemplate;
+		
+		return null;
 	}
 	
 	protected function getContent($rawContent){

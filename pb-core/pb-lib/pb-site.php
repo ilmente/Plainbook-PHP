@@ -2,13 +2,13 @@
 	
 class PlainbookSite extends PlainbookBase {
 	protected $name;
-	protected $baseUri;
-	protected $themeUri;
+	protected $url;
+	protected $config;
 	
-	public function __construct(){
-		$this->name = PB_SITE_NAME;
-		$this->baseUri = PB_BASE_URL;
-		$this->themeUri = PB_BASE_URL.'/pb-theme';
+	public function __construct($config){
+		$this->name = $config['pb.site.name'];
+		$this->url = $config['pb.site.url'];
+		$this->config = $config;
 	}
 };
 	
