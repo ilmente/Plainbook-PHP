@@ -21,3 +21,5 @@ Now I'm using the experience achieved in these years also developing mobile hybr
 - a student of organizational behaviours;
 - an analyst with a different (↑) point of view.
 
+tags: #this-is #a #tag
+

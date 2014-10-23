@@ -1,7 +1,11 @@
 <?php
 	
 class PlainbookBase {
-	public function __construct(){}
+	protected $__config;
+	
+	public function __construct($config){
+		$this->__config = $config;
+	}
 	
 	public function __get($property){
 		if (strpos($property, '__') === 0) return null;
@@ -12,7 +16,7 @@ class PlainbookBase {
 		if (property_exists($this, $lazyProperty)){
 			if (isset($this->$lazyProperty)) return $this->$lazyProperty;
 			
-			if (method_exists($this, $lazyPropertyGetter)) {
+			if (method_exists($this, $lazyPropertyGetter)){
 				$this->$lazyProperty = call_user_func(array($this, $lazyPropertyGetter));
 			}
 			

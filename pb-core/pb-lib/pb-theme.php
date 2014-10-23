@@ -8,6 +8,8 @@ class PlainbookTheme extends PlainbookBase {
 	protected $__data;
 	
 	public function __construct($config, &$site, &$data){
+		parent::__construct($config);
+		
 		$this->name = $config['pb.theme.name'];
 		$this->url = $config['pb.theme.url'];
 		$this->dir = $config['pb.theme.dir'];

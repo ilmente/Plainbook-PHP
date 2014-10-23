@@ -3,12 +3,12 @@
 class PlainbookData extends PlainbookBase {
 	protected $current;
 	protected $__currentFile;
-	protected $__config;
 	protected $__fs;
 	protected $__all;
 	
 	public function __construct($config, $fs, $currentFile){
-		$this->__config = $config;
+		parent::__construct($config);
+		
 		$this->__fs = $fs;
 		$this->__currentFile = $currentFile;
 		$this->current = $this->getFileInfos($currentFile);
@@ -44,11 +44,12 @@ class PlainbookData extends PlainbookBase {
 			'deep' => 0,
 			'orderBy' => '',
 			'orderAsc' => true,
+			//'limit' => 0
 		), $params);
-		$deep = preg_match_all('/\//m', $params['root']) + $params['deep'] - 1;
+		$deep = substr_count($params['root'], '/') + $params['deep'] - 1;
 		
 		foreach($this->__all as $infos){
-			if (preg_match('/^('.preg_quote($params['root'], '/').')/', $infos->path) > 0){
+			if (strpos($infos->path, $params['root']) !== false){
 				if ($params['deep'] === 0 || $deep >= $infos->level) array_push($query, $infos);
 			}
 		}
@@ -57,7 +58,7 @@ class PlainbookData extends PlainbookBase {
 			$order = $params['orderAsc'] ? 1 : -1;
 			$property = 'path';
 			
-			if ($params['orderBy'] <> ''){
+			if ($params['orderBy'] != ''){
 				$property = $params['orderBy'];
 				$item1 = $item1->meta;
 				$item2 = $item2->meta;

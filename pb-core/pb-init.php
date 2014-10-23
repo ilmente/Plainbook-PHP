@@ -15,14 +15,18 @@ $config = array_merge(array(
 	// pb: contents dir
 	'pb.contents.dir' => $config['pb.site.dir'].'pb-contents/',
 	
+	// pb: regular expressions
+	'pb.regexp.visible_directories' => '/(\/[^.#]'.$config['pb.regexp.word'].')$/i',
+	'pb.regexp.visible_files' => '/(\/[^._#]'.$config['pb.regexp.word'].'\\'.$config['pb.contents.extension'].')$/i',
+	'pb.regexp.uri' => '/((\/index\\'.$config['pb.contents.extension'].')$|(\\'.$config['pb.contents.extension'].')$)/i',
+	'pb.regexp.meta.all' => '/^@'.$config['pb.regexp.word'].':.+/im',
+	'pb.regexp.meta.key' => '/(^@|:.+)/',
+	'pb.regexp.meta.value' => '/^@'.$config['pb.regexp.word'].':/i',
+	'pb.regexp.meta.template' => '/^@'.preg_quote(trim($config['pb.keywords.template']), '/').':.+/im',
+	'pb.regexp.meta.tags' => '/^@'.preg_quote(trim($config['pb.keywords.tags']), '/').':.+/im',
+	
 	// slim: templates
 	'templates.path' => $config['pb.site.dir'].'pb-themes/'.$config['pb.theme.name'],
-	
-    // slim: debugging
-    'debug' => true,
-
-    // slim: logging
-    'log.enabled' => true
 ), $config);
 
 $pb = new \Slim\Slim($config);

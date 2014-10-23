@@ -1,12 +1,6 @@
 <?php
 	
-class PlainbookInfos extends PlainbookBase {
-	const META_REGEXP = '/^@\w+:.+/im';
-	const META_KEY_REGEXP = '/(^@|:.+)/';
-	const META_VALUE_REGEXP = '/^@\w+:/i';
-	
-	const TAGS_REGEXP = '/\s+#(\w+|\w+#\w+|\w+#)\s/im';
-	
+class PlainbookInfos extends PlainbookBase {	
 	protected $exists;
 	protected $raw;
 	protected $file;
@@ -17,8 +11,6 @@ class PlainbookInfos extends PlainbookBase {
 	protected $isParent;
 	protected $isFront;
 	
-	protected $__config;
-	
 	protected $__lazy_meta;
 	protected $__lazy_tags;
 	protected $__lazy_template;
@@ -26,32 +18,31 @@ class PlainbookInfos extends PlainbookBase {
 	protected $__lazy_excerpt;
 	
 	public function __construct($config, $file, $currentFile, $fileRawContent){
-		$this->__config = $config;
+		parent::__construct($config);
 		
-		$ext = $this->__config['pb.contents.extension'];
-		$uri = preg_replace('/((\/index\\'.$ext.')$|(\\'.$ext.')$)/i', '', $file).'/';
+		$uri = preg_replace($config['pb.regexp.uri'], '', $file).'/';
 		
 		$this->exists = true;
 		$this->raw = $fileRawContent;
 		$this->file = $file;
 		$this->path = str_replace($this->__config['pb.contents.dir'], '/', $uri);
 		$this->url = ($this->path == '/') ? $this->__config['pb.site.url'] : $this->__config['pb.site.url'].$this->path;
-		$this->level = preg_match_all('/\//', $this->path) - 1;
+		$this->level = substr_count($this->path, '/') - 1;
 		$this->isCurrent = ($file == $currentFile);
 		$this->isFront = ($this->url == $this->__config['pb.site.url']);
 		
 		if ($this->isCurrent || $this->isFront) $this->isParent = false;
-		else $this->isParent = (preg_match_all('/^('.preg_quote($uri, '/').')/', $currentFile) > 0);
+		else $this->isParent = (strpos($currentFile, $uri) !== false);
 	}
 	
 	protected function getMeta(){
 		$meta = array();
-		$hasMeta = (preg_match_all(self::META_REGEXP, $this->raw, $fields) > 0);
+		$hasMeta = (preg_match_all($this->__config['pb.regexp.meta.all'], $this->raw, $fields) > 0);
 		
 		if ($hasMeta){
 			foreach ($fields[0] as $field){
-				$key = preg_replace(self::META_KEY_REGEXP, '', $field);
-				$value = trim(preg_replace(self::META_VALUE_REGEXP, '', $field));
+				$key = preg_replace($this->__config['pb.regexp.meta.key'], '', $field);
+				$value = trim(preg_replace($this->__config['pb.regexp.meta.value'], '', $field));
 				$meta[$key] = $value;
 			}
 		}
@@ -61,13 +52,12 @@ class PlainbookInfos extends PlainbookBase {
 	
 	protected function getTags(){
 		$tags = array();
-		$hasTags = (preg_match_all(self::TAGS_REGEXP, $this->raw, $tagsMatch) > 0);
+		$hasTags = preg_match($this->__config['pb.regexp.meta.tags'], $this->raw, $rawTags);
+		$rawTags = $hasTags ? explode(',', trim(preg_replace($this->__config['pb.regexp.meta.value'], '', $rawTags[0]))) : array();
 		
-		if ($hasTags){
-			foreach ($tagsMatch[0] as $tag){
-				$tag = preg_replace('/^#/', '', trim($tag));
-				if (!in_array($tag, $tags)) array_push($tags, $tag);
-			}
+		foreach ($rawTags as $rawTag){
+			$tag = str_replace(' ', '', $rawTag);
+			if (!in_array($tag, $tags)) array_push($tags, $tag);
 		}
 		
 		return $tags;
@@ -75,8 +65,8 @@ class PlainbookInfos extends PlainbookBase {
 	
 	protected function getTemplate(){
 		$defaultTemplate = 'default';
-		$hasTemplate = preg_match('/^@'.preg_quote(trim($this->__config['pb.keywords.template']), '/').':.+/im', $this->raw, $template);
-		$template = $hasTemplate ? trim(preg_replace(self::META_VALUE_REGEXP, '', $template[0])) : $defaultTemplate;
+		$hasTemplate = preg_match($this->__config['pb.regexp.meta.template'], $this->raw, $template);
+		$template = $hasTemplate ? trim(preg_replace($this->__config['pb.regexp.meta.value'], '', $template[0])) : $defaultTemplate;
 		
 		$templateFile = $this->__config['pb.theme.dir'].$template.'.php';
 		if (file_exists($templateFile)) return $template;
@@ -87,15 +77,20 @@ class PlainbookInfos extends PlainbookBase {
 		return null;
 	}
 	
+	protected function getMarkdown(){
+		return trim(preg_replace($this->__config['pb.regexp.meta.all'], '', $this->raw));
+	}
+	
 	protected function getContent(){
-		$markdown = trim(preg_replace(self::META_REGEXP, '', $this->raw));
+		$markdown = $this->getMarkdown();
 		$parser = new ParsedownExtra();
 		return $parser->text($markdown);
 	}
 	
 	protected function getExcerpt(){
-		$words = explode(' ', $this->content);
-		$excerpt = trim(implode(' ', array_splice($words, 0, $this->__config['pb.contents.excerpt_lenght'])));
+		$text = strip_tags($this->content);
+		$words = explode(' ', $text);
+		$excerpt = trim(implode(' ', array_splice($words, 0, $this->__config['pb.contents.excerpt_length'])));
 		if (count($words) > $length) $excerpt .= '&hellip;';
 		return $excerpt;
 	}
