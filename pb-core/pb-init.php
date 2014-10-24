@@ -18,6 +18,7 @@ $config = array_merge(array(
 	// pb: regular expressions
 	'pb.regexp.visible_directories' => '/(\/[^.#]'.$config['pb.regexp.word'].')$/i',
 	'pb.regexp.visible_files' => '/(\/[^._#]'.$config['pb.regexp.word'].'\\'.$config['pb.contents.extension'].')$/i',
+	'pb.regexp.path' => '/\?.*/',
 	'pb.regexp.uri' => '/((\/index\\'.$config['pb.contents.extension'].')$|(\\'.$config['pb.contents.extension'].')$)/i',
 	'pb.regexp.meta.all' => '/^@'.$config['pb.regexp.word'].':.+/im',
 	'pb.regexp.meta.key' => '/(^@|:.+)/',

@@ -25,7 +25,7 @@
 		<div id="container">
 			<nav>
 				<?php 
-				foreach($data->all(array('deep' => 1, 'orderBy' => 'order')) as $page){ 
+				foreach($data->all(array('deep' => 2, 'orderBy' => 'order')) as $page){ 
 					echo '<a class="'.($page->isCurrent ? 'current' : '').'" href="'.$page->url.'">'.$page->meta->title.'</a>';
 				} 
 				?>

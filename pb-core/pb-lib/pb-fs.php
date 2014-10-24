@@ -5,8 +5,8 @@ class PlainbookFS extends PlainbookBase {
 		parent::__construct($config);
 	}
 		
-	public function getFile($path = ''){
-		$path = preg_replace('/\?.*/', '', $path);
+	public function getFile($path = '/'){
+		$path = preg_replace($this->__config['pb.regexp.path'], '', $path);
 
 		if ($path) $file = $this->__config['pb.contents.dir'].$path;
 		else $file = $this->__config['pb.contents.dir'].'index';

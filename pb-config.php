@@ -17,6 +17,7 @@ $config['pb.contents.extension'] = '.md';
 // pb: keywords
 $config['pb.keywords.template'] = 'template';
 $config['pb.keywords.tags'] = 'tags';
+$config['pb.keywords.pagination'] = 'pp';
 
 // pb: regex base word
 $config['pb.regexp.word'] = '(\w*-*\w+)+-*';
