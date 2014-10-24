@@ -39,6 +39,13 @@ class PlainbookFS extends PlainbookBase {
 	        closedir($handle);
 	    }
 		
+	    uasort($files, function($file1, $file2){
+			$uri1 = preg_replace($this->__config['pb.regexp.uri'], '', $file1).'/';
+			$uri2 = preg_replace($this->__config['pb.regexp.uri'], '', $file2).'/';
+			
+			return ($uri1 >= $uri2) ? 1 : -1;
+	    });
+		
 		return $files;
 	}
 	

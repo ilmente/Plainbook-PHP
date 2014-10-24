@@ -9,6 +9,8 @@ $config['pb.site.dir'] = realpath(dirname(__FILE__)).'/';
 $config['pb.theme.name'] = 'default';
 
 // pb: contents
+$config['pb.contents.orderBy'] = '';
+$config['pb.contents.orderAsc'] = true;
 $config['pb.contents.excerpt_length'] = 30;
 $config['pb.contents.extension'] = '.md';
 
