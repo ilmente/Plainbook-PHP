@@ -25,7 +25,15 @@ $pb->get('/'.$pb->config('pb.keywords.tags').'/(:tag)', function($tag = '') use 
 });
 
 $pb->get('/(:path+)'.$pb->config('pb.keywords.pagination').'/:page', function($path = array(), $page) use ($pb){
-	echo 'pagination: n. '.$page;
+	$fileNotFound = function($path) use ($pb){
+		$pb->redirect($pb->config('pb.site.url').'/404/', 404);
+	};
+	
+	$pathLastIndex = count($path) - 1;
+	if ($pathLastIndex >= 0 && $path[$pathLastIndex] == '') unset($path[$pathLastIndex]);
+
+	$path = str_replace('#', '', implode('/', $path));
+	$pb->load->pagination($path, $page, $fileNotFound);
 });
 */
 
@@ -38,7 +46,7 @@ $pb->get('/(:path+)', function($path = array()) use ($pb){
 	if ($pathLastIndex >= 0 && $path[$pathLastIndex] == '') unset($path[$pathLastIndex]);
 
 	$path = str_replace('#', '', implode('/', $path));
-	$pb->loader->load($path, $fileNotFound);
+	$pb->load->single($path, $fileNotFound);
 });
 
 $pb->notFound(function() use ($pb){

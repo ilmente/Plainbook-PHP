@@ -35,7 +35,7 @@ $pb = new \Slim\Slim($config);
 $pb->e500Unlooper = false;
 $pb->setName($config['pb.site.name']);
 
-$pb->container->singleton('loader', function() use ($config){
+$pb->container->singleton('load', function() use ($config){
 	return new PlainbookLoader($config);
 });
 

@@ -1,0 +1,213 @@
+
+$color:#555;
+$colorAlt:#00B4A5;
+$borderColor:#eee;
+$unit:25px;
+
+@import 'helpers';
+@import 'animations';
+
+/*
+*
+*
+* CSS
+*/
+
+::selection {
+  	color:$color;
+  	background:yellow;
+}
+
+::-moz-selection {
+  	color:$color;
+  	background:yellow;
+}
+
+body 
+{
+	//border-top:5px solid $color;
+  	font-family:'Source Sans Pro', 'Times new roman', serif;
+  	font-size:16px;
+	font-weight:300;
+  	line-height:26px;
+  	color:$color;
+}
+
+h1, h2, h3, h4, h5, h6
+{
+	margin:$unit 0 5px 0;
+	padding:0px;
+	font-family:'Lobster', 'Times new roman', serif;
+}
+
+h1
+{
+	margin-bottom:7px;
+	font-size:33px;
+}
+
+h2
+{
+	font-size:28px;
+}
+
+h3
+{
+	font-size:24px;
+}
+
+h4
+{
+	margin-bottom:0px;
+	font-size:20px;
+}
+
+h5
+{
+	margin-bottom:0px;
+	font-size:17px;
+}
+
+h6
+{
+	margin-bottom:0px;
+	font-size:15px;
+}
+
+a
+{
+	text-decoration:none;
+	color:$color;
+	
+	@include color();
+}
+
+b, strong
+{
+	font-weight:600;
+}
+
+p
+{
+	margin:0 0 $unit 0;
+	padding:0px;
+}
+
+ul, ol, blockquote
+{
+	margin:$unit 0;
+}
+
+.clearfix
+{
+	clear:both;
+}
+
+.inner
+{
+	max-width:800px;
+	margin:auto;
+	padding-left:$unit;
+	padding-right:$unit;
+}
+
+header
+{
+	border-bottom:1px solid $borderColor;
+	
+	.title
+	{
+		float:right;
+		margin:(($unit * 2) - 10) 0 0 0;
+	  	font-family:'Lobster', 'Times new roman', serif;
+		font-size:40px;
+	  	color:$colorAlt;
+		
+		@include color();
+	}
+}
+
+nav
+{
+	ul
+	{
+		float:left;
+		margin:0px;
+		padding:0px;
+		text-align:center;
+		
+		li
+		{
+			display:inline-block;
+			margin:(($unit * 2) - 5) $unit 0 0px;
+			padding:0px;
+			
+			a
+			{
+				display:inline-block;
+				margin:0 0 -1px 0;
+				padding:5px 0 5px 0;
+				border-bottom:0px solid $borderColor;
+				text-decoration:none;
+				color:$color;
+				
+				@include transition(border-color);
+				
+				&:hover,
+				&.current
+				{
+					border-bottom-width:1px;
+				}
+			}
+		}
+	}
+}
+
+.main
+{
+	.content
+	{
+		padding:($unit * 2) inherit;
+		text-align:justify;
+		
+		*:first-child
+		{
+			margin-top:0px;
+			padding-top:0px;
+		}
+		
+		*:last-child
+		{
+			margin-bottom:0px;
+			padding-bottom:0px;
+		}
+		
+		a
+		{
+			font-weight:400;
+			color:$colorAlt;
+			
+			@include color();
+		}
+	}
+}
+
+
+footer
+{	
+	.content
+	{
+		padding:0 0 ($unit * 2) 0;
+		border-top:1px solid $borderColor;
+		text-align:right;
+		
+		a
+		{
+			display:inline-block;
+			margin:-1px 0 0 0;
+			padding:5px 0;
+			border-top:1px solid $color;
+			font-weight:600;
+		}
+	}
+}

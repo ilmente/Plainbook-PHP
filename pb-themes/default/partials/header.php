@@ -12,7 +12,7 @@
 		<meta name="copyright" content="Copyright 2014">
 		<meta name="robot" content="index,follow">
 
-		<link type='text/css' rel="stylesheet" href='http://fonts.googleapis.com/css?family=Abril+Fatface'>
+		<!--link type='text/css' rel='stylesheet' href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,700,300italic,700italic|Playfair+Display:400,700|Noto+Serif:400,700'-->
 		<link type='text/css' rel="stylesheet" href="<?php echo $theme->url; ?>assets/css/normalize.css">
 		<link type='text/css' rel="stylesheet" href="<?php echo $theme->url; ?>assets/css/style.css">
 		
@@ -23,11 +23,48 @@
 	</head>
     <body>
 		<div id="container">
-			<nav>
-				<?php 
-				foreach($data->all(array('deep' => 2, 'orderBy' => 'order')) as $page){ 
-					echo '<a class="'.($page->isCurrent ? 'current' : '').'" href="'.$page->url.'">'.$page->meta->title.'</a>';
-				} 
-				?>
-			</nav>
-			<a class="open-nav" href="#open-nav">#</a>
+			<header>
+				<div class="inner">
+					<h1 class="title">ilmente</h1>
+				
+					<nav>
+						<ul>
+						<?php 
+						foreach($data->all(array('deep' => 1, 'orderBy' => 'order')) as $page){ 
+							echo '<li><a class="'.(($page->isCurrent || $page->isParent) ? 'current' : '').'" href="'.$page->url.'">'.$page->meta->title.'</a></li>';
+						} 
+						?>
+						</ul>
+					</nav>
+					
+					<div class="clearfix"></div>
+				</div>
+			</header>
+			
+			<div class="main">
+				<div class="content inner">
+					<?php echo $data->current->content; ?>
+				</div>
+			</div>
+			
+			<footer>
+				<div class="content inner">
+					happily made with <a>plainbook</a>
+				</div>
+			</footer>
+		</div>
+
+
+
+		<!-- Big G analytics -->
+		<script>
+			(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+			(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+			})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+			ga('create', 'UA-11393697-1', 'ilmente.it');
+			ga('send', 'pageview');
+		</script>
+	</body>
+</html>
