@@ -1,5 +1,5 @@
 $helpersDefaultDuration:300ms;
-$helpersDefaultEase:ease-in-out;
+$helpersDefaultEase:linear;
 
 /*
 *
@@ -35,10 +35,18 @@ $helpersDefaultEase:ease-in-out;
 * transition/animations
 */
 
-@mixin transition($properties, $duration: $helpersDefaultDuration)
+@mixin transition($property, $duration: $helpersDefaultDuration)
 {
-	-webkit-transition:$properties $helpersDefaultDuration $helpersDefaultEase;
-	transition:$properties $helpersDefaultDuration $helpersDefaultEase;
+	-webkit-transition:$property $duration $helpersDefaultEase;
+	transition:$property $duration $helpersDefaultEase;
+
+	@include hd3D();
+}
+
+@mixin double-transition($property1, $property2, $duration1: $helpersDefaultDuration, $duration2: $helpersDefaultDuration)
+{
+	-webkit-transition:$property1 $duration1 $helpersDefaultEase, $property2 $duration2 $helpersDefaultEase;
+	transition:$property1 $duration1 $helpersDefaultEase, $property2 $duration2 $helpersDefaultEase;
 
 	@include hd3D();
 }

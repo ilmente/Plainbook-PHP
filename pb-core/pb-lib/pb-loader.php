@@ -15,13 +15,23 @@ class PlainbookLoader extends PlainbookBase {
 		
 		if (isset($file)){
 			$site = new PlainbookSite($this->__config);
-			$data = new PlainbookData($this->__config, $fs, $file, $page);
+			$data = new PlainbookData($this->__config, $fs, $file);
 			$theme = new PlainbookTheme($this->__config, $site, $data);
 
 			$theme->render($data->current->template, $httpCode);
 		} else {
 			$fileNotFound($path);
 		}
+	}
+	
+	public function json($path, $fileNotFound){
+		$fs = new PlainbookFS($this->__config);
+		$file = $fs->getFile($path);
+		
+		if (isset($file)) return new PlainbookData($this->__config, $fs, $file);
+		
+		$fileNotFound($path);
+		return '';
 	}
 };
 	

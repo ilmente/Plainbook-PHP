@@ -49,6 +49,20 @@ $pb->get('/(:path+)', function($path = array()) use ($pb){
 	$pb->load->single($path, $fileNotFound);
 });
 
+/*
+$pb->map('/get-json/(:path+)', function($path = array()) use ($pb){
+	$fileNotFound = function($path) use ($pb){
+		$pb->redirect($pb->config('pb.site.url').'/404/', 404);
+	};
+	
+	$pathLastIndex = count($path) - 1;
+	if ($pathLastIndex >= 0 && $path[$pathLastIndex] == '') unset($path[$pathLastIndex]);
+
+	$path = str_replace('#', '', implode('/', $path));
+	$pb->load->single($path, $fileNotFound);
+})->('GET', 'POST');
+*/
+
 $pb->notFound(function() use ($pb){
 	$pb->redirect($pb->config('pb.site.url').'/404/', 404);
 });
