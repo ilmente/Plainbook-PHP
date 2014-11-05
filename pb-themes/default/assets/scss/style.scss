@@ -231,24 +231,16 @@ nav
 		*:first-child
 		{
 			margin-top:0px;
-			padding-top:0px;
 		}
 	
 		*:last-child
 		{
 			margin-bottom:0px;
-			padding-bottom:0px;
 		}
 		
-		a
+		a:hover
 		{
-			padding:0 2px;
-			background-color:$codeColor;
-			
-			&:hover
-			{
-				background-color:transparent;
-			}
+			text-decoration:underline;
 		}
 	}
 }

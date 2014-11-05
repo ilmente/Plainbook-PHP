@@ -37,7 +37,7 @@ var pb = {
 				if (prevIndex == nextIndex) nextIndex += (nextIndex == 5) ? -1 : 1;
 				window.localStorage.colorIndex = nextIndex;
 				$('body').attr('color', nextIndex);
-			}, 200);
+			}, 50);
 		}
 	}
 };

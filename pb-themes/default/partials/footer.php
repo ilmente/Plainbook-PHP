@@ -5,7 +5,7 @@
 					<div class="contents">
 						&copy; ilmente.it, 2006 - <?php echo date('Y'); ?>
 						<span class="separator">//</span>
-						happily made with <a href="#"><strong>plainbook</strong></a>
+						happily made with <a href="https://github.com/ilmente/Plainbook" target="_blank"><strong>plainbook</strong></a>
 					</div>
 				</div>
 			</footer>

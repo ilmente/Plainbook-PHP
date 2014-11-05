@@ -179,16 +179,11 @@ nav ul {
     padding-top: 50px;
     padding-bottom: 50px; }
     #main .contents *:first-child {
-      margin-top: 0px;
-      padding-top: 0px; }
+      margin-top: 0px; }
     #main .contents *:last-child {
-      margin-bottom: 0px;
-      padding-bottom: 0px; }
-    #main .contents a {
-      padding: 0 2px;
-      background-color: #f8f8f8; }
-      #main .contents a:hover {
-        background-color: transparent; }
+      margin-bottom: 0px; }
+    #main .contents a:hover {
+      text-decoration: underline; }
 
 footer .contents {
   padding: 5px 0 50px 0;
