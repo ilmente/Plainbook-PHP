@@ -11,6 +11,59 @@
 /*
 *
 *
+* Animation
+*/
+@keyframes color {
+  0% {
+    border-color: #00b1a8;
+    color: #00b1a8; }
+
+  20% {
+    border-color: #1dadec;
+    color: #1dadec; }
+
+  40% {
+    border-color: #e16bf2;
+    color: #e16bf2; }
+
+  60% {
+    border-color: #f52c4b;
+    color: #f52c4b; }
+
+  80% {
+    border-color: #f27621;
+    color: #f27621; }
+
+  100% {
+    border-color: #00b1a8;
+    color: #00b1a8; } }
+@-webkit-keyframes color {
+  0% {
+    border-color: #00b1a8;
+    color: #00b1a8; }
+
+  20% {
+    border-color: #1dadec;
+    color: #1dadec; }
+
+  40% {
+    border-color: #e16bf2;
+    color: #e16bf2; }
+
+  60% {
+    border-color: #f52c4b;
+    color: #f52c4b; }
+
+  80% {
+    border-color: #f27621;
+    color: #f27621; }
+
+  100% {
+    border-color: #00b1a8;
+    color: #00b1a8; } }
+/*
+*
+*
 * CSS
 */
 ::selection {
@@ -21,13 +74,7 @@
   background: #FEF6A7;
   color: #333333 !important; }
 
-html {
-  height: 100%;
-  width: 100%; }
-
 body {
-  height: 100%;
-  width: 100%;
   background: #fff;
   font-family: 'Source Sans Pro', Arial, sans-serif;
   font-size: 16px;
@@ -57,14 +104,14 @@ body {
     border-color: #f27621; }
 
 h1, h2, h3, h4, h5, h6, .title {
-  margin: 25px 0 10px 0;
+  margin: 25px 0 0.1em 0;
   padding: 0px;
   font-family: 'Lobster', 'Times new roman', serif;
   font-weight: normal;
+  line-height: 1.1em;
   color: #333333; }
 
 h1 {
-  margin-bottom: 12px;
   font-size: 33px; }
 
 h2 {
@@ -74,15 +121,12 @@ h3 {
   font-size: 24px; }
 
 h4 {
-  margin-bottom: 5px;
   font-size: 20px; }
 
 h5 {
-  margin-bottom: 5px;
   font-size: 17px; }
 
 h6 {
-  margin-bottom: 5px;
   font-size: 15px; }
 
 a {
@@ -90,8 +134,8 @@ a {
   color: #00b1a8;
   outline: none;
   -webkit-tap-highlight-color: transparent;
-  -webkit-transition: all 300ms linear;
-  transition: all 300ms linear;
+  -webkit-transition: color 500ms ease-in-out;
+  transition: color 500ms ease-in-out;
   -webkit-transform: translate3d(0, 0, 0);
   transform: translate3d(0, 0, 0);
   -webkit-transform-style: flat;
@@ -108,7 +152,7 @@ p {
 pre {
   margin: 0 0 25px 0;
   padding: 25px;
-  background: #f8f8f8; }
+  background: #fafafa; }
 
 code {
   margin: 0px !important;
@@ -128,21 +172,19 @@ ul, ol, blockquote {
   padding: 0 5px;
   letter-spacing: -2px; }
 
-.inner {
+.inner, nav {
   max-width: 800px;
   margin: auto;
   padding-left: 25px;
   padding-right: 25px; }
 
 #container {
-  height: 100%;
-  width: 100%;
   -webkit-transform: translate3d(0, 0, 0);
   transform: translate3d(0, 0, 0);
   -webkit-transform-style: flat;
   transform-style: flat;
-  -webkit-transition: -webkit-transform 300ms linear;
-  transition: transform 300ms linear;
+  -webkit-transition: -webkit-transform 500ms ease-in-out;
+  transition: transform 500ms ease-in-out;
   -webkit-perspective: 1000;
   -webkit-backface-visibility: hidden; }
 
@@ -150,27 +192,37 @@ header {
   border-bottom: 1px solid #eeeeee; }
   header .title {
     float: right;
-    margin: 40px 0 15px 0;
+    margin: 41px 0 5px 0;
     font-size: 40px; }
 
 #menu {
   display: none; }
 
-nav ul {
-  float: left;
-  margin: 0px;
-  padding: 0px;
-  text-align: center; }
-  nav ul li {
-    display: inline-block;
-    margin: 45px 25px 0 0px;
-    padding: 0px; }
-    nav ul li .navigation {
+nav {
+  position: relative;
+  z-index: 150; }
+  nav ul {
+    float: left;
+    margin: 0px;
+    padding: 0px;
+    text-align: center; }
+    nav ul li {
       display: inline-block;
-      margin: 0 0 -1px 0;
-      padding: 5px 0 5px 0;
-      border-bottom: 1px solid #eeeeee;
-      text-decoration: none; }
+      margin: 55px 25px 0 0px;
+      padding: 0px; }
+      nav ul li .navigation {
+        display: inline-block;
+        margin: 0 0 -1px 0;
+        padding: 5px 0 5px 0;
+        border-bottom: 1px solid #eeeeee;
+        text-decoration: none;
+        -webkit-transition: color 500ms ease-in-out, border-color 500ms ease-in-out;
+        transition: color 500ms ease-in-out, border-color 500ms ease-in-out;
+        -webkit-transform: translate3d(0, 0, 0);
+        transform: translate3d(0, 0, 0);
+        -webkit-transform-style: flat;
+        -webkit-backface-visibility: hidden;
+        -webkit-perspective: 1000; }
 
 #main {
   position: relative;
@@ -182,8 +234,6 @@ nav ul {
       margin-top: 0px; }
     #main .contents *:last-child {
       margin-bottom: 0px; }
-    #main .contents a:hover {
-      text-decoration: underline; }
 
 footer .contents {
   padding: 5px 0 50px 0;
@@ -195,7 +245,7 @@ footer .contents {
   #menu {
     display: inline-block;
     position: absolute;
-    top: 40px;
+    top: 50px;
     left: 25px;
     font-size: 30px; }
 
@@ -205,8 +255,17 @@ footer .contents {
     left: -251px;
     width: 250px;
     height: 100%;
+    padding: 0px;
     border-right: 1px solid #eeeeee;
-    z-index: 100; }
+    z-index: 100;
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+    -webkit-transform-style: flat;
+    transform-style: flat;
+    -webkit-transition: -webkit-transform 500ms ease-in-out;
+    transition: transform 500ms ease-in-out;
+    -webkit-perspective: 1000;
+    -webkit-backface-visibility: hidden; }
     nav ul {
       float: none;
       text-align: left; }
@@ -220,16 +279,24 @@ footer .contents {
           margin: 0 0 0 0;
           padding: 15px;
           border-bottom: none;
-          text-decoration: none; }
+          text-decoration: none;
+          -webkit-transition: color 500ms ease-in-out, background-color 500ms ease-in-out;
+          transition: color 500ms ease-in-out, background-color 500ms ease-in-out;
+          -webkit-transform: translate3d(0, 0, 0);
+          transform: translate3d(0, 0, 0);
+          -webkit-transform-style: flat;
+          -webkit-backface-visibility: hidden;
+          -webkit-perspective: 1000; }
           nav ul li .navigation:hover, nav ul li .navigation.current {
-            background-color: #f8f8f8; }
+            background-color: #fafafa; }
 
+  body.open-nav nav,
   body.open-nav #container {
     -webkit-transform: translate3d(250px, 0, 0);
     transform: translate3d(250px, 0, 0);
     -webkit-transform-style: flat;
     transform-style: flat;
-    -webkit-transition: -webkit-transform 300ms linear;
-    transition: transform 300ms linear;
+    -webkit-transition: -webkit-transform 500ms ease-in-out;
+    transition: transform 500ms ease-in-out;
     -webkit-perspective: 1000;
     -webkit-backface-visibility: hidden; } }

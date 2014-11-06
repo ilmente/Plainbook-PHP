@@ -1,43 +1,55 @@
 var pb = {
 	hasStorage: !!window.localStorage,
+	currentIndex: false,
 	
 	initialize: function(){
-		hljs.initHighlightingOnLoad();
-		pb.bindEvents();
-	},
-	
-	bindEvents: function(hasStorage){
+		if (!!window.hljs) hljs.initHighlightingOnLoad();
+		
 		$(document).ready(function(){
-			pb.router();
+			pb.changeColor();
 			
-			$(window).on('hashchange', pb.router);
+			$('#menu').on('click', function(){
+				$('body').toggleClass('open-nav');
+				return false;
+			});
+			
+			$('html').on('click', '.open-nav #container', function(){
+				$('body').removeClass('open-nav');
+				return false;
+			});
+			
+			$('html').on('click', '.open-nav .navigation', function(){
+				var href = $(this).attr('href');
+				
+				$('body').removeClass('open-nav', {
+					onTransitionEnd: function(){
+						window.location.href = href;
+					}
+				});
+				
+				return false;
+			});
+			
+			$('.contents a').stop(true, true).on('mouseover', pb.changeColor);
 		});
 	},
 	
-	router: function(){
-		var hash = window.location.hash;
-		pb.changeColor();
-		
-		if (hash == '#/nav'){
-			$('body').addClass('open-nav');
-			$('#menu').attr('href', '#/');
-		} else {
-			$('body').removeClass('open-nav');
-			$('#menu').attr('href', '#/nav');
-		}
-	},
-	
 	changeColor: function(){
-		if (pb.hasStorage){
-			var prevIndex = window.localStorage.colorIndex || 1;
-			$('body').attr('color', prevIndex);
-	
-			setTimeout(function(){
-				var nextIndex = Math.round((1 + Math.random() * 10) / 2);
-				if (prevIndex == nextIndex) nextIndex += (nextIndex == 5) ? -1 : 1;
-				window.localStorage.colorIndex = nextIndex;
-				$('body').attr('color', nextIndex);
-			}, 50);
+		var changeColor = function(){
+			var nextIndex = Math.round((1 + Math.random() * 10) / 2);
+			pb.currentIndex = (pb.currentIndex == nextIndex) ? (nextIndex += (nextIndex == 5) ? -1 : 1) : nextIndex;
+			$('body').attr('color', pb.currentIndex);
+			
+			if (pb.hasStorage) window.localStorage.colorIndex = pb.currentIndex;
+		};
+		
+		if (pb.currentIndex || !pb.hasStorage){
+			changeColor();
+		} else {
+			pb.currentIndex = window.localStorage.colorIndex || 1;
+			$('body').attr('color', pb.currentIndex);
+			
+			setTimeout(changeColor, 50);
 		}
 	}
 };

@@ -20,6 +20,7 @@
 		
 		<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 		<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.3/highlight.min.js"></script>
+		<script src="<?php echo $theme->url; ?>assets/js/j.js"></script>
 		<script src="<?php echo $theme->url; ?>assets/js/cmh.js"></script>
 		<script src="<?php echo $theme->url; ?>assets/js/main.js"></script>
 		<script>pb.baseUrl = '<?php echo $site->url; ?>';</script>
@@ -27,23 +28,20 @@
         <title><?php echo $data->current->meta->title; ?> | <?php echo $site->name; ?></title>
 	</head>
     <body>
+		<nav>
+			<ul>
+			<?php foreach($data->all(array('deep' => 1, 'orderBy' => 'order')) as $page){ 
+				echo '<li><a class="navigation '.(($page->isCurrent || $page->isParent) ? 'current' : '').'" href="'.$page->url.'">'.$page->meta->title.'</a></li>';
+			} ?>
+			</ul>
+		</nav>
+		
 		<div id="container">
 			<header>
-				<a id="menu" href="#/nav">#</a>
+				<a id="menu" href="#nav">#</a>
 				
 				<div class="inner">
-					<h1 class="title"><a href="<?php echo $site->url; ?>">ilmente</a></h1>
-				
-					<nav>
-						<ul>
-						<?php 
-						foreach($data->all(array('deep' => 1, 'orderBy' => 'order')) as $page){ 
-							echo '<li><a class="navigation '.(($page->isCurrent || $page->isParent) ? 'current' : '').'" href="'.$page->url.'">'.$page->meta->title.'</a></li>';
-						} 
-						?>
-						</ul>
-					</nav>
-					
+					<h1 class="title"><a href="<?php echo $site->url; ?>">ilment<span class="crazy">e</span></a></h1>
 					<div class="clearfix"></div>
 				</div>
 			</header>

@@ -2,12 +2,13 @@
 $color:#333;
 $colorAlt:#00B1A8;
 $borderColor:#eee;
-$codeColor:#f8f8f8;
+$codeColor:#fafafa;
 
 $width:800px;
 $unit:25px;
 
 @import 'helpers';
+@import 'animations';
 
 /*
 *
@@ -25,17 +26,8 @@ $unit:25px;
   	color:$color !important;
 }
 
-html 
-{
-	height:100%;
-	width:100%;
-}
-
 body 
 {
-	//border-top:5px solid $color;
-	height:100%;
-	width:100%;
 	background:#fff;
   	font-family:'Source Sans Pro', Arial, sans-serif;
   	font-size:16px;
@@ -64,16 +56,16 @@ body
 
 h1, h2, h3, h4, h5, h6, .title
 {
-	margin:$unit 0 10px 0;
+	margin:$unit 0 0.1em 0;
 	padding:0px;
 	font-family:'Lobster', 'Times new roman', serif;
 	font-weight:normal;
+	line-height:1.1em;
 	color:$color;
 }
 
 h1
 {
-	margin-bottom:12px;
 	font-size:33px;
 }
 
@@ -89,19 +81,16 @@ h3
 
 h4
 {
-	margin-bottom:5px;
 	font-size:20px;
 }
 
 h5
 {
-	margin-bottom:5px;
 	font-size:17px;
 }
 
 h6
 {
-	margin-bottom:5px;
 	font-size:15px;
 }
 
@@ -111,7 +100,7 @@ a
 	color:$colorAlt;
 	
 	@include noHighlight();
-	@include transition(all);
+	@include transition(color);
 }
 
 b, strong
@@ -167,10 +156,7 @@ ul, ol, blockquote
 }
 
 #container
-{
-	height:100%;
-	width:100%;
-	
+{	
 	@include move();
 }
 
@@ -181,8 +167,13 @@ header
 	.title
 	{
 		float:right;
-		margin:(($unit * 2) - 10) 0 15px 0;
+		margin:(($unit * 2) - 9) 0 5px 0;
 		font-size:40px;
+		
+		.crazy
+		{
+			
+		}
 	}
 }
 
@@ -193,6 +184,11 @@ header
 
 nav
 {	
+	position:relative;
+	z-index:150;
+	
+	@extend .inner;
+	
 	ul
 	{
 		float:left;
@@ -203,7 +199,7 @@ nav
 		li
 		{
 			display:inline-block;
-			margin:(($unit * 2) - 5) $unit 0 0px;
+			margin:(($unit * 2) + 5) $unit 0 0px;
 			padding:0px;
 			
 			.navigation
@@ -213,6 +209,8 @@ nav
 				padding:5px 0 5px 0;
 				border-bottom:1px solid $borderColor;
 				text-decoration:none;
+				
+				@include double-transition(color, border-color);
 			}
 		}
 	}
@@ -237,11 +235,6 @@ nav
 		{
 			margin-bottom:0px;
 		}
-		
-		a:hover
-		{
-			text-decoration:underline;
-		}
 	}
 }
 
@@ -263,7 +256,7 @@ footer
 	{
 		display:inline-block;
 		position:absolute;
-		top:40px;
+		top:$unit * 2;
 		left:$unit;
 		font-size:30px;
 	}
@@ -275,8 +268,11 @@ footer
 		left:-251px;
 		width:250px;
 		height:100%;
+		padding:0px;
 		border-right:1px solid $borderColor;
 		z-index:100;
+		
+		@include move();
 		
 		ul
 		{
@@ -298,6 +294,8 @@ footer
 					border-bottom:none;
 					text-decoration:none;
 					
+					@include double-transition(color, background-color);
+					
 					&:hover,
 					&.current
 					{
@@ -310,6 +308,7 @@ footer
 	
 	body.open-nav
 	{	
+		nav,
 		#container
 		{
 			@include move(250px);
