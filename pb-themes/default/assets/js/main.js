@@ -1,20 +1,22 @@
 var pb = {
+	storage: window.localStorage,
 	hasStorage: !!window.localStorage,
 	currentIndex: false,
 	
 	initialize: function(){
 		if (!!window.hljs) hljs.initHighlightingOnLoad();
 		
-		$(document).ready(function(){
+		$(document).ready(function(){	
 			pb.changeColor();
 			
 			$('#menu').on('click', function(){
-				$('body').toggleClass('open-nav');
+				if ($('body').hasClass('open-nav')) $('body').removeClass('open-nav', pb.changeColorCallback);
+				else $('body').addClass('open-nav', pb.changeColorCallback);
 				return false;
 			});
 			
 			$('html').on('click', '.open-nav #container', function(){
-				$('body').removeClass('open-nav');
+				$('body').removeClass('open-nav', pb.changeColorCallback);
 				return false;
 			});
 			
@@ -30,7 +32,7 @@ var pb = {
 				return false;
 			});
 			
-			$('.contents a').stop(true, true).on('mouseover', pb.changeColor);
+			$('.contents a').stop(true, true).on('mouseenter', pb.changeColor);
 		});
 	},
 	
@@ -38,18 +40,26 @@ var pb = {
 		var changeColor = function(){
 			var nextIndex = Math.round((1 + Math.random() * 10) / 2);
 			pb.currentIndex = (pb.currentIndex == nextIndex) ? (nextIndex += (nextIndex == 5) ? -1 : 1) : nextIndex;
+			$('body').addClass('color');
 			$('body').attr('color', pb.currentIndex);
 			
-			if (pb.hasStorage) window.localStorage.colorIndex = pb.currentIndex;
+			if (pb.hasStorage) pb.storage.pbColorIndex = pb.currentIndex;
 		};
 		
 		if (pb.currentIndex || !pb.hasStorage){
 			changeColor();
 		} else {
-			pb.currentIndex = window.localStorage.colorIndex || 1;
+			pb.currentIndex = pb.storage.pbColorIndex || 1;
 			$('body').attr('color', pb.currentIndex);
 			
-			setTimeout(changeColor, 50);
+			if (!!pb.storage.pbColorIndex) setTimeout(changeColor, 50);
+			else pb.storage.pbColorIndex = pb.currentIndex;
+		}
+	},
+	
+	changeColorCallback: {
+		onTransitionEnd: function(){
+			pb.changeColor();
 		}
 	}
 };

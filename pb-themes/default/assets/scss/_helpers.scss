@@ -10,6 +10,7 @@ $helpersDefaultEase:ease-in-out;
 @mixin size($type: border-box)
 {
 	-webkit-box-sizing:$type;
+	-moz-box-sizing:$type;
 	box-sizing:$type;
 }
 
@@ -22,8 +23,12 @@ $helpersDefaultEase:ease-in-out;
 @mixin hd3D()
 {
 	-webkit-transform: translate3d(0, 0, 0);
+	-moz-transform: translate3d(0, 0, 0);
 	transform: translate3d(0, 0, 0);
+	
 	-webkit-transform-style:flat;
+	-moz-transform-style:flat;
+	transform-style:flat;
 	
 	-webkit-backface-visibility:hidden;
 	-webkit-perspective:1000;
@@ -37,28 +42,34 @@ $helpersDefaultEase:ease-in-out;
 
 @mixin transition($property, $duration: $helpersDefaultDuration)
 {
-	-webkit-transition:$property $duration $helpersDefaultEase;
-	transition:$property $duration $helpersDefaultEase;
-
 	@include hd3D();
+	
+	-webkit-transition:$property $duration $helpersDefaultEase;
+	-moz-transition:$property $duration $helpersDefaultEase;
+	transition:$property $duration $helpersDefaultEase;
 }
 
 @mixin double-transition($property1, $property2, $duration1: $helpersDefaultDuration, $duration2: $helpersDefaultDuration)
 {
-	-webkit-transition:$property1 $duration1 $helpersDefaultEase, $property2 $duration2 $helpersDefaultEase;
-	transition:$property1 $duration1 $helpersDefaultEase, $property2 $duration2 $helpersDefaultEase;
-
 	@include hd3D();
+	
+	-webkit-transition:$property1 $duration1 $helpersDefaultEase, $property2 $duration2 $helpersDefaultEase;
+	-moz-transition:$property1 $duration1 $helpersDefaultEase, $property2 $duration2 $helpersDefaultEase;
+	transition:$property1 $duration1 $helpersDefaultEase, $property2 $duration2 $helpersDefaultEase;
 }
 
-@mixin move($x: 0, $y: 0, $z: 0, $duration: $helpersDefaultDuration)
+@mixin move($x: 0, $y: 0, $duration: $helpersDefaultDuration)
 {
-	-webkit-transform:translate3d($x, 0, 0);
-	transform:translate3d($x, 0, 0);
+	-webkit-transform:translate3d($x, $y, 0);
+	-moz-transform:translate3d($x, $y, 0);
+	transform:translate3d($x, $y, 0);
+	
 	-webkit-transform-style:flat;
+	-moz-transform-style:flat;
 	transform-style:flat;
 	
 	-webkit-transition:-webkit-transform $helpersDefaultDuration $helpersDefaultEase;
+	-moz-transition:-moz-transform $helpersDefaultDuration $helpersDefaultEase;
 	transition:transform $helpersDefaultDuration $helpersDefaultEase;
 	
 	-webkit-perspective:1000;
@@ -68,12 +79,14 @@ $helpersDefaultEase:ease-in-out;
 @mixin animate($animation, $duration: $helpersDefaultDuration)
 {
 	-webkit-animation:$animation $duration linear forwards;
+	-moz-animation:$animation $duration linear forwards;
 	animation:$animation $duration linear forwards;
 }
 
 @mixin infinite($animation, $duration: $helpersDefaultDuration)
 {
 	-webkit-animation:$animation $duration linear infinite;
+	-moz-animation:$animation $duration linear infinite;
 	animation:$animation $duration linear infinite;
 }
 

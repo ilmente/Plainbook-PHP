@@ -1,10 +1,10 @@
 
-$color:#333;
+$color:#000;
 $colorAlt:#00B1A8;
 $borderColor:#eee;
 $codeColor:#fafafa;
 
-$width:800px;
+$width:750px;
 $unit:25px;
 
 @import 'helpers';
@@ -26,15 +26,22 @@ $unit:25px;
   	color:$color !important;
 }
 
+html
+{
+	overflow-x:hidden;
+}
+
 body 
 {
 	background:#fff;
   	font-family:'Source Sans Pro', Arial, sans-serif;
-  	font-size:16px;
+  	font-size:19px;
 	font-weight:300;
-  	line-height:1.6em;
+  	line-height:1.5em;
   	color:$color;
 	overflow-x:hidden;
+    -webkit-font-smoothing:subpixel-antialiased;
+    
 	
 	$colors-list: $colorAlt #1DADEC #E16BF2 #F52C4B #F27621;
 	@each $color in $colors-list
@@ -46,11 +53,23 @@ body
 			color:#{$color};
 		}
 		
+		&[color="#{$i}"] #menu:before,
+		&[color="#{$i}"] #menu:after,
 		&[color="#{$i}"] .navigation:hover,
 		&[color="#{$i}"] .navigation.current
 		{
 			border-color:#{$color};
 		}
+	}
+	
+	&.color a
+	{
+		@include transition(color);
+	}
+	
+	&.color .navigation
+	{
+		@include double-transition(color, border-color);
 	}
 }
 
@@ -66,32 +85,32 @@ h1, h2, h3, h4, h5, h6, .title
 
 h1
 {
-	font-size:33px;
+	font-size:40px;
 }
 
 h2
 {
-	font-size:28px;
+	font-size:35px;
 }
 
 h3
 {
-	font-size:24px;
+	font-size:30px;
 }
 
 h4
 {
-	font-size:20px;
+	font-size:25px;
 }
 
 h5
 {
-	font-size:17px;
+	font-size:20px;
 }
 
 h6
 {
-	font-size:15px;
+	font-size:18px;
 }
 
 a
@@ -100,7 +119,6 @@ a
 	color:$colorAlt;
 	
 	@include noHighlight();
-	@include transition(color);
 }
 
 b, strong
@@ -167,19 +185,45 @@ header
 	.title
 	{
 		float:right;
-		margin:(($unit * 2) - 9) 0 5px 0;
-		font-size:40px;
-		
-		.crazy
-		{
-			
-		}
+		margin:37px 0 3px 0;
+		font-size:50px;
 	}
 }
 
 #menu
 {
 	display:none;
+	position:absolute;
+	top:61px;
+	left:$unit;
+	width:30px;
+	height:19px;
+	
+	&:before
+	{
+		content:'';
+		position:absolute;
+		top:0px;
+		left:0px;
+		width:100%;
+		height:8px;
+		border-top:1px solid $colorAlt;
+		border-bottom:1px solid $colorAlt;
+		
+		@include transition(all);
+	}
+	
+	&:after
+	{
+		content:'';
+		position:absolute;
+		bottom:0px;
+		left:0px;
+		width:100%;
+		border-bottom:1px solid $colorAlt;
+		
+		@include transition(all);
+	}
 }
 
 nav
@@ -199,7 +243,7 @@ nav
 		li
 		{
 			display:inline-block;
-			margin:(($unit * 2) + 5) $unit 0 0px;
+			margin:60px $unit 0 0px;
 			padding:0px;
 			
 			.navigation
@@ -209,8 +253,6 @@ nav
 				padding:5px 0 5px 0;
 				border-bottom:1px solid $borderColor;
 				text-decoration:none;
-				
-				@include double-transition(color, border-color);
 			}
 		}
 	}
@@ -250,15 +292,57 @@ footer
 	}
 }
 
-@media only screen and (max-width: $width) 
+@media only screen and (max-width: ($width + $unit * 2)) 
 {
+	body
+	{	
+		&.color
+		{
+			.navigation
+			{
+				@include double-transition(color, background-color);
+			}
+		}
+	
+		&.open-nav
+		{
+			#menu
+			{
+				&:before
+				{
+					-webkit-transform:rotate(45deg) translate3d(4px, 10px, 0);
+					-moz-transform:rotate(45deg) translate3d(4px, 10px, 0);
+					transform:rotate(45deg) translate3d(4px, 10px, 0);
+					border-bottom-color:#fff !important;
+				}
+		
+				&:after
+				{
+					-webkit-transform:rotate(-45deg) translate3d(4px, -6px, 0);
+					-moz-transform:rotate(-45deg) translate3d(4px, -6px, 0);
+					transform:rotate(-45deg) translate3d(4px, -6px, 0);
+				}
+			}
+		
+			nav,
+			#container
+			{
+				@include move(250px);
+			}
+		}
+	}
+	
+	.separator
+	{
+		display:block;
+		padding:0px;
+		line-height:0px;
+		opacity:0;
+	}
+	
 	#menu
 	{
-		display:inline-block;
-		position:absolute;
-		top:$unit * 2;
-		left:$unit;
-		font-size:30px;
+		display:block;
 	}
 	
 	nav
@@ -292,9 +376,8 @@ footer
 					margin:0 0 0 0;
 					padding:15px;
 					border-bottom:none;
+					font-weight:400;
 					text-decoration:none;
-					
-					@include double-transition(color, background-color);
 					
 					&:hover,
 					&.current
@@ -303,15 +386,6 @@ footer
 					}
 				}
 			}
-		}
-	}
-	
-	body.open-nav
-	{	
-		nav,
-		#container
-		{
-			@include move(250px);
 		}
 	}
 }

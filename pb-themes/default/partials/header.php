@@ -13,7 +13,7 @@
 		<meta name="generator" content="Plainbook CMS">
 		<meta name="robot" content="index,follow">
 
-		<link type='text/css' rel='stylesheet' href='//fonts.googleapis.com/css?family=Source+Sans+Pro:300,600,300italic,600italic|Lobster'>
+		<link type='text/css' rel='stylesheet' href='//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,300italic,600italic|Lobster'>
 		<link type='text/css' rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.3/styles/docco.min.css">
 		<link type='text/css' rel="stylesheet" href="<?php echo $theme->url; ?>assets/css/normalize.css">
 		<link type='text/css' rel="stylesheet" href="<?php echo $theme->url; ?>assets/css/style.css">
@@ -38,7 +38,7 @@
 		
 		<div id="container">
 			<header>
-				<a id="menu" href="#nav">#</a>
+				<a id="menu" href="#nav"></a>
 				
 				<div class="inner">
 					<h1 class="title"><a href="<?php echo $site->url; ?>">ilment<span class="crazy">e</span></a></h1>

@@ -31,3 +31,30 @@
 {
 	@include animation-color();
 }
+
+@mixin animation-flip()
+{
+	0% 
+	{	
+		-webkit-transform:rotateY(0deg);
+		-moz-transform:rotateY(0deg);
+		transform:rotateY(0deg);
+	}
+	
+	100% 
+	{	
+		-webkit-transform:rotateY(359deg);
+		-moz-transform:rotateY(359deg);
+		transform:rotateY(359deg);
+	}
+}
+
+@keyframes flip
+{
+	@include animation-flip();
+}
+
+@-webkit-keyframes flip
+{
+	@include animation-flip();
+}
