@@ -5,17 +5,7 @@ $pb->get('/404/', function() use ($pb){
 		echo '404: file not found';
 	};
 	
-	$pb->loader->load('_404', $fileNotFound, 404);
-	$pb->stop();
-});
-
-$pb->get('/500/', function() use ($pb){
-	$fileNotFound = function($path){
-		$pb->halt(500, '500: server error');
-	};
-	
-	$pb->loader->load('_500', $fileNotFound, 500);
-	$pb->e500Unlooper = false;
+	$pb->load->single('#404', $fileNotFound, 404);
 	$pb->stop();
 });
 
@@ -68,12 +58,7 @@ $pb->notFound(function() use ($pb){
 });
 
 $pb->error(function(Exception $e) use ($pb){
-	if ($pb->e500Unlooper){
-		$pb->halt(500, '500: server error (loop)');
-	} else {
-		$pb->e500Unlooper = true;
-		$pb->redirect($pb->config('pb.site.url').'/500/', 500);
-	}
+	$pb->halt(500, '500: server error');
 });
 
 ?>

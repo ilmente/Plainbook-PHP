@@ -100,31 +100,42 @@ class PlainbookData extends PlainbookBase {
 	/**
 	 * Get the informations of all files. 
 	 * You can filter them passing a query object.
-	 * Default:
-	 * 		'root' 		=> root path for filtering: it returns all the files under this path (default: "/", site root)
-	 *		'deep' 		=> number of levels the tree must be navigate through, starting from root (default: "0", all levels)
-	 *		'orderBy' 	=> meta field used to sort the files (default: configuration settings - alphabetically by path)
-	 *		'orderAsc' 	=> sorting direction (default: configuration settings - ASC)
 	 * The default query returns all the files inside the site, sorted by path, ASC.
+	 * See documentation for more informations about $query;
 	 * @param type $query (optional)
 	 * @return array(PlainbookInfos)
 	 */
 	public function all($query = array()){
 		if (!isset($this->__all)) $this->__all = $this->getFilesInfos();
 		if (empty($query)) return $this->__all;
-		
-		$filtered = array();
+
 		$query = array_merge(array(
 			'root' => '/',
 			'deep' => 0,
+			'exclude' => array(),
 			'orderBy' => $this->__config['pb.contents.orderBy'],
 			'orderAsc' => $this->__config['pb.contents.orderAsc'],
 			//'limit' => 0
 		), $query);
+
 		$deep = substr_count($query['root'], '/') + $query['deep'] - 1;
+
+		$isInsideTheTree = function($path) use ($query){
+			return (strpos($path, $query['root']) !== false);
+		};
 		
+		$isIncluded = function($path) use ($query){
+			$included = true;
+			foreach($query['exclude'] as $pattern) {
+				if (strpos($path, $pattern) !== false) $included = false;
+			}
+			return $included;
+		};
+
+		$filtered = array();
+
 		foreach($this->__all as $infos){
-			if (strpos($infos->path, $query['root']) !== false){
+			if ($isInsideTheTree($infos->path) && $isIncluded($infos->path)){
 				if ($query['deep'] === 0 || $deep >= $infos->level) array_push($filtered, $infos);
 			}
 		}

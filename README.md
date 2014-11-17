@@ -63,11 +63,12 @@ When you want to create a new theme, you can access 3 objects:
 * `$data->prev`: returns the `PlainbookInfos` object relative to the previous file, depending on the sorting order specified inside the `pb-config.php`;
 * `$data->get(path)` returns the `PlainbookInfos` object addressed by the relative path passed to the method; 
 * `$data->around(offset [, query])`: returns the `PlainbookInfos` object "located" at a specific distance (offset) from the current one; positive offset is for searching in next files, negative number is for searching in previous file, depending on the sorting order specified inside the `pb-config.php` or by the `query` array passed to the method (see below);
-* `$data->all([query])`: returns the `PlainbookInfos` of all files, optionally filter by a `query` array:
+* `$data->all([query])`: returns a `PlainbookInfos` array (all files), optionally filtered by a `query` array:
 	* `root`: root path for filtering: it returns all the files under this path (default: "/", site root);
 	* `deep`: number of levels the tree must be navigate through, starting from root (default: "0", all levels);
 	* `orderBy`: meta field used to sort the files (default: configuration settings - alphabetically by path);
-	* `orderAsc`: sorting direction (default: configuration settings - ASC).
+	* `orderAsc`: sorting direction (default: configuration settings - ASC);
+	* `exlude`: array of strings; if one of them is found inside the page path, the page is excluded (default: empty array).
  
 Now let's take a look inside the `PlainbookInfos` class, assuming that you will use `$data->current` object:
 

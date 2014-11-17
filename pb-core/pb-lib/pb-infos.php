@@ -16,7 +16,6 @@ class PlainbookInfos extends PlainbookBase {
 	protected $isFront;
 	
 	protected $__lazy_meta;
-	protected $__lazy_tags;
 	protected $__lazy_template;
 	protected $__lazy_content;
 	protected $__lazy_excerpt;
@@ -54,7 +53,7 @@ class PlainbookInfos extends PlainbookBase {
 			foreach ($fields[0] as $field){
 				$key = preg_replace($this->__config['pb.regexp.meta.key'], '', $field);
 				$value = trim(preg_replace($this->__config['pb.regexp.meta.value'], '', $field));
-				$meta[$key] = $value;
+				$meta[$key] = new PlainbookMeta($this->__config, $value);
 			}
 		}
 

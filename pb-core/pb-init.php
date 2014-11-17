@@ -31,8 +31,6 @@ $config = array_merge(array(
 ), $config);
 
 $pb = new \Slim\Slim($config);
-
-$pb->e500Unlooper = false;
 $pb->setName($config['pb.site.name']);
 
 $pb->container->singleton('load', function() use ($config){
@@ -48,6 +46,7 @@ include_once 'pb-lib/pb-base.php';
 include_once 'pb-lib/pb-dummy.php';
 include_once 'pb-lib/pb-fs.php'; 
 include_once 'pb-lib/pb-site.php';
+include_once 'pb-lib/pb-meta.php';
 include_once 'pb-lib/pb-infos.php'; 
 include_once 'pb-lib/pb-data.php'; 
 include_once 'pb-lib/pb-theme.php'; 
