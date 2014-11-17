@@ -1,5 +1,9 @@
 <?php
 	
+/**
+ * Plainbook theme-management class.
+ * @package PB
+ */
 class PlainbookTheme extends PlainbookBase {
 	protected $name;
 	protected $url;
@@ -7,6 +11,12 @@ class PlainbookTheme extends PlainbookBase {
 	protected $__site;
 	protected $__data;
 	
+	/**
+	 * Contructor.
+	 * @param array(mixed) $config 
+	 * @param PlainbookSite &$site 
+	 * @param PlainbookData &$data
+	 */
 	public function __construct($config, &$site, &$data){
 		parent::__construct($config);
 		
@@ -17,6 +27,12 @@ class PlainbookTheme extends PlainbookBase {
 		$this->__data = $data;
 	}
 	
+	/**
+	 * Renders the partial template element for the current page.
+	 * It includes $site, $data and $theme in the accessible scope.
+	 * @param string $template 
+	 * @param integer $httpCode (optional)
+	 */
 	public function render($template, $httpCode = 200){
 		$pb = \Slim\Slim::getInstance();
 		$pb->render($template.'.php', array(

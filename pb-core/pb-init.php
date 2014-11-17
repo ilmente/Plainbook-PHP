@@ -45,6 +45,7 @@ include_once 'pb-vendor/Parsedown.php';
 include_once 'pb-vendor/ParsedownExtra.php'; 
 
 include_once 'pb-lib/pb-base.php';
+include_once 'pb-lib/pb-dummy.php';
 include_once 'pb-lib/pb-fs.php'; 
 include_once 'pb-lib/pb-site.php';
 include_once 'pb-lib/pb-infos.php'; 

@@ -1,10 +1,24 @@
 <?php
 	
+/**
+ * Plainbook filesystem class.
+ * @package PB
+ */
 class PlainbookFS extends PlainbookBase {
+
+	/**
+	 * Constructor.
+	 * @param array(mixed) $config 
+	 */
 	public function __construct($config){
 		parent::__construct($config);
 	}
-		
+	
+	/**
+	 * Returns the full path (directory) of a given file relative path (default is root).
+	 * @param string $path (optional)
+	 * @return string or null
+	 */	
 	public function getFile($path = '/'){
 		$path = preg_replace($this->__config['pb.regexp.path'], '', $path);
 
@@ -18,6 +32,12 @@ class PlainbookFS extends PlainbookBase {
 		return null;
 	}
 	
+	/**
+	 * Returns the full path (directory) of each file under a certain root.
+	 * @param string $root (optional)
+	 * @param type &$files (optional)
+	 * @return array(string)
+	 */
 	public function getFiles($root = null, &$files = array()){
 		if (!isset($root)) $root = $this->__config['pb.contents.dir'];
 		
@@ -49,6 +69,11 @@ class PlainbookFS extends PlainbookBase {
 		return $files;
 	}
 	
+	/**
+	 * Reads the contents of a specific file (giving its directory).
+	 * @param string $file 
+	 * @return string
+	 */
 	public function readFile($file){
 		if (isset($file) && file_exists($file)) return file_get_contents($file);
 		else return '';

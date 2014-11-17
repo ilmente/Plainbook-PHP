@@ -1,5 +1,9 @@
 <?php
 	
+/**
+ * Plainbook informations-management class.
+ * @package PB
+ */
 class PlainbookInfos extends PlainbookBase {	
 	protected $exists;
 	protected $raw;
@@ -17,6 +21,13 @@ class PlainbookInfos extends PlainbookBase {
 	protected $__lazy_content;
 	protected $__lazy_excerpt;
 	
+	/**
+	 * Contructor.
+	 * @param array(mixed) $config 
+	 * @param string $file 
+	 * @param string $currentFile 
+	 * @param string $fileRawContent 
+	 */
 	public function __construct($config, $file, $currentFile, $fileRawContent){
 		parent::__construct($config);
 		
