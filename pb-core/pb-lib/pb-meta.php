@@ -4,8 +4,7 @@
  * Plainbook meta field class
  * @package PB
  */
-class PlainbookMeta {
-	protected $__config;
+class PlainbookMeta extends PlainbookBase {
 	protected $__value;
 	
 	/**
@@ -14,7 +13,8 @@ class PlainbookMeta {
 	 * @param string $value 
 	 */
 	public function __construct($config, $value){
-		$this->__config = $config;
+		parent::__construct($config);
+		
 		$this->__value = $value;
 	}
 

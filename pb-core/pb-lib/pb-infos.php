@@ -5,8 +5,8 @@
  * @package PB
  */
 class PlainbookInfos extends PlainbookBase {	
+	protected $content;
 	protected $exists;
-	protected $raw;
 	protected $file;
 	protected $url;
 	protected $path;
@@ -17,8 +17,6 @@ class PlainbookInfos extends PlainbookBase {
 	
 	protected $__lazy_meta;
 	protected $__lazy_template;
-	protected $__lazy_content;
-	protected $__lazy_excerpt;
 	
 	/**
 	 * Contructor.
@@ -32,8 +30,8 @@ class PlainbookInfos extends PlainbookBase {
 		
 		$uri = preg_replace($config['pb.regexp.uri'], '', $file).'/';
 		
+		$this->content = new PlainbookContent($config, $fileRawContent);
 		$this->exists = true;
-		$this->raw = $fileRawContent;
 		$this->file = $file;
 		$this->path = str_replace($this->__config['pb.contents.dir'], '/', $uri);
 		$this->url = ($this->path == '/') ? $this->__config['pb.site.url'] : $this->__config['pb.site.url'].$this->path;
@@ -47,7 +45,7 @@ class PlainbookInfos extends PlainbookBase {
 	
 	protected function getMeta(){
 		$meta = array();
-		$hasMeta = (preg_match_all($this->__config['pb.regexp.meta.all'], $this->raw, $fields) > 0);
+		$hasMeta = (preg_match_all($this->__config['pb.regexp.meta.all'], $this->content->raw, $fields) > 0);
 		
 		if ($hasMeta){
 			foreach ($fields[0] as $field){
@@ -60,22 +58,9 @@ class PlainbookInfos extends PlainbookBase {
 		return (object) $meta;
 	}
 	
-	protected function getTags(){
-		$tags = array();
-		$hasTags = preg_match($this->__config['pb.regexp.meta.tags'], $this->raw, $rawTags);
-		$rawTags = $hasTags ? explode(',', trim(preg_replace($this->__config['pb.regexp.meta.value'], '', $rawTags[0]))) : array();
-		
-		foreach ($rawTags as $rawTag){
-			$tag = str_replace(' ', '', $rawTag);
-			if (!in_array($tag, $tags)) array_push($tags, $tag);
-		}
-		
-		return $tags;
-	}
-	
 	protected function getTemplate(){
 		$defaultTemplate = 'default';
-		$hasTemplate = preg_match($this->__config['pb.regexp.meta.template'], $this->raw, $template);
+		$hasTemplate = preg_match($this->__config['pb.regexp.meta.template'], $this->content->raw, $template);
 		$template = $hasTemplate ? trim(preg_replace($this->__config['pb.regexp.meta.value'], '', $template[0])) : $defaultTemplate;
 		
 		$templateFile = $this->__config['pb.theme.dir'].$template.'.php';
@@ -85,24 +70,6 @@ class PlainbookInfos extends PlainbookBase {
 		if (file_exists($templateFile)) return $defaultTemplate;
 		
 		return null;
-	}
-	
-	protected function getMarkdown(){
-		return trim(preg_replace($this->__config['pb.regexp.meta.all'], '', $this->raw));
-	}
-	
-	protected function getContent(){
-		$markdown = $this->getMarkdown();
-		$parser = new ParsedownExtra();
-		return $parser->text($markdown);
-	}
-	
-	protected function getExcerpt(){
-		$text = strip_tags($this->content);
-		$words = explode(' ', $text);
-		$excerpt = trim(implode(' ', array_splice($words, 0, $this->__config['pb.contents.excerpt_length'])));
-		if (count($words) > $length) $excerpt .= '&hellip;';
-		return $excerpt;
 	}
 }
 	

@@ -46,6 +46,7 @@ include_once 'pb-lib/pb-base.php';
 include_once 'pb-lib/pb-dummy.php';
 include_once 'pb-lib/pb-fs.php'; 
 include_once 'pb-lib/pb-site.php';
+include_once 'pb-lib/pb-content.php';
 include_once 'pb-lib/pb-meta.php';
 include_once 'pb-lib/pb-infos.php'; 
 include_once 'pb-lib/pb-data.php'; 
