@@ -7,8 +7,8 @@
 class PlainbookContent extends PlainbookBase {
 	protected $raw;
 
+	protected $__lazy_markdown;
 	protected $__lazy_content;
-	protected $__lazy_excerpt;
 	
 	public function __construct($config, $raw){
 		parent::__construct($config);
@@ -21,15 +21,15 @@ class PlainbookContent extends PlainbookBase {
 	}
 	
 	protected function getContent(){
-		$markdown = $this->getMarkdown();
 		$parser = new ParsedownExtra();
-		return $parser->text($markdown);
+		return $parser->text($this->markdown);
 	}
 	
-	protected function getExcerpt(){
+	public function getExcerpt($length = 0){
+		$length = ($length === 0) ? $this->__config['pb.contents.excerpt_length'] : $length;
 		$text = strip_tags($this->content);
 		$words = explode(' ', $text);
-		$excerpt = trim(implode(' ', array_splice($words, 0, $this->__config['pb.contents.excerpt_length'])));
+		$excerpt = trim(implode(' ', array_splice($words, 0, $length)));
 		if (count($words) > $length) $excerpt .= '&hellip;';
 		return $excerpt;
 	}
