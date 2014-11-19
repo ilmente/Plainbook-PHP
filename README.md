@@ -73,7 +73,10 @@ When you want to create a new theme, you can access 3 objects:
 Now let's take a look inside the `PlainbookInfos` class, assuming that you will use `$data->current` object:
 
 * `$data->current->exists`: returns if this file exists;
-* `$data->current->raw`: returns the raw content of this file;
+* `$data->current->content`: returns a `PlainbookContent` object:
+	* `$data->current->content`: if printed, returns the parsed content of the file;
+	* `$data->current->content->raw`: returns the raw content of the file;
+	* `$data->current->content->execerpt`: returns the excerpt of the content, depending on the length specified by the setting `pb.contents.excerpt_length` inside the `pb-confing.php` file;
 * `$data->current->file`: returns the file absolute path;
 * `$data->current->url`: returns the file url;
 * `$data->current->path`: returns the file relative path;
@@ -81,11 +84,12 @@ Now let's take a look inside the `PlainbookInfos` class, assuming that you will 
 * `$data->current->isCurrent`: returns if the current url addresses this file;
 * `$data->current->isParent`: returns if the this file is parent or ancestor of the current one;
 * `$data->current->isFront`: returns if this file is the front page one;
-* `$data->current->meta`: returns an object containing the *meta fields*;
+* `$data->current->meta`: returns an object containings `PlainbookMeta` instances:
+	* `$data->current->meta->field_name`: returns the content of the *meta field*;
+	* `$data->current->meta->field_name->toList([separator])`: returns an array of string, splitter using a separator (default is ",") and trimmed;
+	* `$data->current->meta->field_name->toJSON()`: returns an object or an array, decoded from string value JSON representation; the value must be a valid JSON string, or the method will returns `NULL`;
 * `$data->current->tags`: returns the tags;
 * `$data->current->template`: returns the template name for this file;
-* `$data->current->content`: returns the `html` content of the file;
-* `$data->current->excerpt`: returns the excerpt of the content, depending on the length specified by the setting `pb.contents.excerpt_length` inside the `pb-confing.php` file.
 
 
 #### $theme
