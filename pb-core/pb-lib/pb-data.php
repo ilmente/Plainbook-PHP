@@ -113,29 +113,29 @@ class PlainbookData extends PlainbookBase {
 			'root' => '/',
 			'deep' => 0,
 			'exclude' => array(),
+			'excludeRoot' => false,
 			'orderBy' => $this->__config['pb.contents.orderBy'],
 			'orderAsc' => $this->__config['pb.contents.orderAsc'],
 			//'limit' => 0
 		), $query);
 
 		$deep = substr_count($query['root'], '/') + $query['deep'] - 1;
-
-		$isInsideTheTree = function($path) use ($query){
-			return (strpos($path, $query['root']) !== false);
-		};
 		
 		$isIncluded = function($path) use ($query){
-			$included = true;
+			if ($query['excludeRoot'] && ($path == $query['root'])) return false;
+			if (strpos($path, $query['root']) === false) return false;
+
 			foreach($query['exclude'] as $pattern) {
-				if (strpos($path, $pattern) !== false) $included = false;
+				if (strpos($path, $pattern) !== false) return false;
 			}
-			return $included;
+
+			return true;
 		};
 
 		$filtered = array();
 
 		foreach($this->__all as $infos){
-			if ($isInsideTheTree($infos->path) && $isIncluded($infos->path)){
+			if ($isIncluded($infos->path)){
 				if ($query['deep'] === 0 || $deep >= $infos->level) array_push($filtered, $infos);
 			}
 		}

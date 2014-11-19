@@ -13,7 +13,7 @@
 		<meta name="generator" content="Plainbook CMS">
 		<meta name="robot" content="index,follow">
 
-		<link type='text/css' rel='stylesheet' href='//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic|Reenie+Beanie'>
+		<link type='text/css' rel='stylesheet' href='//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic|Reenie+Beanie|Source+Sans+Pro:900'>
 		<link type='text/css' rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.3/styles/docco.min.css">
 		<link type='text/css' rel="stylesheet" href="<?php echo $theme->url; ?>assets/css/normalize.css">
 		<link type='text/css' rel="stylesheet" href="<?php echo $theme->url; ?>assets/css/style.css">

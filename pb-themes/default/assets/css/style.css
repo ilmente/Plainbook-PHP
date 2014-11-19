@@ -37,35 +37,37 @@ body {
 h1, h2, h3, h4, h5, h6, .title {
   margin: 50px 0 0 0;
   padding: 0px;
-  font-weight: normal;
-  line-height: 1em;
   color: #333333; }
 
-h1, h2, h3, h4 {
+h1, h2, h3 {
   font-family: 'Reenie Beanie', Arial, sans-serif;
+  font-weight: normal;
+  line-height: 1em;
   letter-spacing: -0.04em; }
 
-h5, h6 {
-  font-weight: bold;
-  line-height: 1.5em; }
+h4, h5, h6 {
+  font-family: 'Source Sans Pro', Arial, sans-serif;
+  font-weight: 900;
+  line-height: 1.3em;
+  letter-spacing: -0.02em; }
 
 h1 {
   font-size: 80px; }
 
 h2 {
-  font-size: 65px; }
+  font-size: 60px; }
 
 h3 {
-  font-size: 55px; }
+  font-size: 48px; }
 
 h4 {
-  font-size: 45px; }
+  font-size: 32px; }
 
 h5 {
-  font-size: 30px; }
+  font-size: 26px; }
 
 h6 {
-  font-size: 25px; }
+  font-size: 21px; }
 
 a {
   text-decoration: none;
@@ -183,15 +185,14 @@ nav {
   position: relative;
   z-index: 50; }
   #main .contents {
-    padding-top: 150px;
-    padding-bottom: 25px; }
+    padding-top: 150px; }
     #main .contents *:first-child {
       margin-top: 0px; }
     #main .contents *:last-child {
       margin-bottom: 0px; }
 
 footer .contents {
-  padding: 0 0 35px 0;
+  padding: 25px 0 100px 0;
   font-style: italic;
   text-align: right;
   color: #bbbbbb; }
@@ -216,19 +217,19 @@ footer .contents {
     font-size: 60px; }
 
   h2 {
-    font-size: 50px; }
+    font-size: 46px; }
 
   h3 {
     font-size: 40px; }
 
   h4 {
-    font-size: 35px; }
+    font-size: 28px; }
 
   h5 {
-    font-size: 25px; }
+    font-size: 24px; }
 
   h6 {
-    font-size: 20px; }
+    font-size: 19px; }
 
   .separator {
     display: block;
