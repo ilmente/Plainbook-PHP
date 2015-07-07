@@ -1,7 +1,8 @@
-Plainbook CMS
+Plainbook PHP CMS - DISMISSED
 =============
 
 *A place for writers*
+**This CMS is no longer maintained and remains here as an exercise I've done**
 
 ## The CMS
 This is a **simple *markdown* flat-file CMS written in PHP**. 
